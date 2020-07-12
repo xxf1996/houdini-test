@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Houdini</title>
+  <style>
+    @keyframes lineMove {
+      0% {
+        --line-offset: 0%;
+        --line-color: #36f;
+      }
+
+      50% {
+        --line-offset: 50%;
+        --line-color: #6f9;
+      }
+
+      100% {
+        --line-offset: 100%;
+        --line-color: #f69;
+      }
+    }
+    .demo {
+      margin: 40px 0;
+    }
+    .corner {
+      --circle-color: rgba(255, 152, 111, 0.2);
+      --circle-radius: 0px;
+      width: 200px;
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+      background-image: paint(corner-circle);
+      transition: --circle-radius 0.4s ease-in-out, --circle-color 0.4s ease-in-out;
+    }
+    .corner:hover {
+      --circle-radius: 200px;
+      --circle-color: rgba(255, 152, 111, 1);
+      cursor: pointer;
+    }
+    .box {
+      --box-color: lightskyblue;
+      --box-width: 0%;
+      width: 200px;
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+      background-color: lightskyblue;
+      background-image: paint(box);
+      transition: --box-width 0.4s ease-in-out, --box-color 0.4s ease-in-out;
+    }
+    .box:hover {
+      --box-width: 100%;
+      --box-color: rgb(157, 159, 255);
+      cursor: pointer;
+    }
+    .glass {
+      --glass-offset: -30%;
+      --glass-width: 40px;
+      width: 200px;
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+      color: #fff;
+      background-color: #333;
+      background-image: paint(glass-effect);
+      transition: --glass-offset 0.8s ease-in-out;
+    }
+    .glass:hover {
+      --glass-offset: 130%;
+      cursor: pointer;
+    }
+    .move {
+      --line-offset: 0%;
+      --line-color: #69f;
+      --line-length: 50px;
+      width: 200px;
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+      color: #fff;
+      background-color: #333;
+      background-image: paint(line-move);
+      animation: lineMove 3s linear infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo corner">Hover Me</div>
+  <div class="demo box">Hover Me</div>
+  <div class="demo glass">Hover Me</div>
+  <div class="demo move">Look Me</div>
+  <script>
+    if ('registerProperty' in CSS && 'CSSUnitValue' in window) {
+      CSS.registerProperty({
+        name: '--circle-color',
+        syntax: '<color>',
+        initialValue: '#39f',
+        inherits: false
+      })
+      CSS.registerProperty({
+        name: '--circle-radius',
+        syntax: '<length>',
+        initialValue: '5px',
+        inherits: false
+      })
+      CSS.registerProperty({
+        name: '--box-color',
+        syntax: '<color>',
+        initialValue: '#39f',
+        inherits: false
+      })
+      CSS.registerProperty({
+        name: '--box-width',
+        syntax: '<percentage>',
+        initialValue: '0%',
+        inherits: false
+      })
+      CSS.registerProperty({
+        name: '--glass-offset',
+        syntax: '<percentage>',
+        initialValue: '0%',
+        inherits: false
+      })
+      CSS.registerProperty({
+        name: '--glass-width',
+        syntax: '<length>',
+        initialValue: '0px',
+        inherits: false
+      })
+      CSS.registerProperty({
+        name: '--line-offset',
+        syntax: '<percentage>',
+        initialValue: '0%',
+        inherits: false
+      })
+      CSS.registerProperty({
+        name: '--line-length',
+        syntax: '<length>',
+        initialValue: '10px',
+        inherits: false
+      })
+      CSS.registerProperty({
+        name: '--line-color',
+        syntax: '<color>',
+        initialValue: '#39f',
+        inherits: false
+      })
+    }
+    if ('paintWorklet' in CSS) {
+      CSS.paintWorklet.addModule('./test.js')
+    }
+  </script>
+</body>
+</html>
